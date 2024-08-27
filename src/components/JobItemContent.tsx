@@ -1,6 +1,8 @@
-import BookmarkIcon from "./BookmarkIcon";
+import BookmarkIcon from './BookmarkIcon';
 
 export default function JobItemContent() {
+  return <EmptyJobContent />;
+
   return (
     <section className="job-details">
       <div>
@@ -44,7 +46,7 @@ export default function JobItemContent() {
                 $105,000+
               </p>
               <p className="job-info__extra">
-                <i className="fa-solid fa-location-dot job-info__extra-icon"></i>{" "}
+                <i className="fa-solid fa-location-dot job-info__extra-icon"></i>{' '}
                 Global
               </p>
             </div>
@@ -82,7 +84,7 @@ export default function JobItemContent() {
 
         <footer className="job-details__footer">
           <p className="job-details__footer-text">
-            If possible, please reference that you found the job on{" "}
+            If possible, please reference that you found the job on{' '}
             <span className="u-bold">rmtDev</span>, we would really appreciate
             it!
           </p>
