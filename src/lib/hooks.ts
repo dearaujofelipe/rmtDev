@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { JobItem } from './types';
+import { BASE_API_URL } from './constants';
 
 export function useActiveId() {
   const [activeId, setActiveId] = useState<number | null>(null);
@@ -22,6 +23,24 @@ export function useActiveId() {
   return activeId;
 }
 
+export function useJobItem(id: number | null) {
+  const [jobItem, setJobItem] = useState(null);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchData = async () => {
+      const response = await fetch(`${BASE_API_URL}/${id}`);
+      const data = await response.json();
+      setJobItem(data.jobItem);
+    };
+
+    fetchData();
+  }, [id]);
+
+  return jobItem;
+}
+
 export function useJobItems(searchText: string) {
   const [jobItems, setJobItems] = useState<JobItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,9 +52,7 @@ export function useJobItems(searchText: string) {
 
       setIsLoading(true);
       try {
-        const res = await fetch(
-          `https://bytegrad.com/course-assets/projects/rmtdev/api/data?search=${searchText}`
-        );
+        const res = await fetch(`${BASE_API_URL}?search=${searchText}`);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
