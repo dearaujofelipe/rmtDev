@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { JobItem } from './types';
+import { JobItem, JobItemExpanded } from './types';
 import { BASE_API_URL } from './constants';
 
 export function useActiveId() {
@@ -24,7 +24,7 @@ export function useActiveId() {
 }
 
 export function useJobItem(id: number | null) {
-  const [jobItem, setJobItem] = useState(null);
+  const [jobItem, setJobItem] = useState<JobItemExpanded | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -49,8 +49,8 @@ export function useJobItems(searchText: string) {
   useEffect(() => {
     const fetchData = async (searchText: string) => {
       if (!searchText) return;
-
       setIsLoading(true);
+
       try {
         const res = await fetch(`${BASE_API_URL}?search=${searchText}`);
         if (!res.ok) {
