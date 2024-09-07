@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { JobItem, JobItemExpanded } from './types';
 import { BASE_API_URL } from './constants';
 import { useQuery } from '@tanstack/react-query';
+import { handleError } from './utils';
 
 // ------------------------------------------------------
 // export function useJobItem(id: number | null) {
@@ -51,9 +52,7 @@ export function useJobItem(id: number | null) {
       refetchOnWindowFocus: false,
       retry: false,
       enabled: Boolean(id),
-      onError: (error) => {
-        console.log(error);
-      },
+      onError: handleError,
     }
   );
 
@@ -102,8 +101,14 @@ type JobItemsApiResponse = {
 const fetchJobItems = async (
   searchText: string
 ): Promise<JobItemsApiResponse> => {
-  const res = await fetch(`${BASE_API_URL}?search=${searchText}`);
-  const data = await res.json();
+  const response = await fetch(`${BASE_API_URL}?search=${searchText}`);
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.description);
+  }
+
+  const data = await response.json();
   return data;
 };
 
@@ -116,9 +121,7 @@ export function useJobItems(searchText: string) {
       refetchOnWindowFocus: false,
       retry: false,
       enabled: Boolean(searchText),
-      onError: (error) => {
-        console.log(error);
-      },
+      onError: handleError,
     }
   );
 
