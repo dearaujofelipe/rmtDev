@@ -6,7 +6,7 @@ import { handleError } from './utils';
 import { BookmarksContext } from '../contexts/BookmarksContextProvider';
 import { ActiveIdContext } from '../contexts/ActiveIdContextProvider';
 import { SearchTextContext } from '../contexts/SearchTextContextProvider';
-import { JobItemsContex } from '../contexts/JobItemsContextProvider';
+import { JobItemsContext } from '../contexts/JobItemsContextProvider';
 
 // ------------------------------------------------------
 // export function useJobItem(id: number | null) {
@@ -246,24 +246,22 @@ export function useActiveIdContext() {
   return context;
 }
 
-export function useSearchContext() {
+export function useSearchTextContext() {
   const context = useContext(SearchTextContext);
-
-  if (!context)
+  if (!context) {
     throw new Error(
-      'SearchTextContext must be used within a SearchTextContextProvider'
+      'useSearchTextContext must be used within a SearchTextContextProvider'
     );
-
+  }
   return context;
 }
 
 export function useJobItemsContext() {
-  const context = useContext(JobItemsContex);
-
-  if (!context)
+  const context = useContext(JobItemsContext);
+  if (!context) {
     throw new Error(
-      'JobItemsContext must be used within a JobItemsContextProvider'
+      'useJobItemsContext must be used within a JobItemsContextProvider'
     );
-
+  }
   return context;
 }

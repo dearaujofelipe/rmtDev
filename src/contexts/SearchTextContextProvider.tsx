@@ -16,13 +16,18 @@ export default function SearchTextContextProvider({
 }) {
   const [searchText, setSearchText] = useState('');
   const debouncedSearchText = useDebounce(searchText, 250);
+
   const handleChangeSearchText = (newSearchText: string) => {
     setSearchText(newSearchText);
   };
 
   return (
     <SearchTextContext.Provider
-      value={{ searchText, debouncedSearchText, handleChangeSearchText }}
+      value={{
+        searchText,
+        debouncedSearchText,
+        handleChangeSearchText,
+      }}
     >
       {children}
     </SearchTextContext.Provider>
